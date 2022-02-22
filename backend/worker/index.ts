@@ -10,22 +10,21 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 wss.on("connection", (ws: WebSocket) => {
-  let ptyProcess = pty.spawn("bash", ["--login"], {
+  const ptyProcess = pty.spawn("sh", [], {
     name: "xterm-color",
     cols: 80,
     rows: 24,
-    cwd: process.env.HOME,
+    cwd: process.cwd(),
   });
 
   ptyProcess.on("data", (data) => ws.send(data));
 
   ws.on("message", (message: string) => {
-    console.log("received: %s", message);
+    console.log("rcvd: %s", message);
     ptyProcess.write(message);
   });
 });
 
-//start our server
 server.listen(process.env.PORT || 8999, () => {
   console.log(
     `Server started on port ${

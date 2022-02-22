@@ -8,7 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 wss.on("connection", (ws) => {
-    let ptyProcess = pty.spawn("bash", ["--login"], {
+    const ptyProcess = pty.spawn("bash", [], {
         name: "xterm-color",
         cols: 80,
         rows: 24,
@@ -16,16 +16,10 @@ wss.on("connection", (ws) => {
     });
     ptyProcess.on("data", (data) => ws.send(data));
     ws.on("message", (message) => {
-        console.log("received: %s", message);
+        console.log("rcvd: %s", message);
         ptyProcess.write(message);
-        // if (m.input) {
-        //   ptyProcess.write(message);
-        // } else if (m.resize) {
-        //   ptyProcess.resize(m.resize[0], m.resize[1]);
-        // }
     });
 });
-//start our server
 server.listen(process.env.PORT || 8999, () => {
     console.log(`Server started on port ${server.address().port} :)`);
 });
