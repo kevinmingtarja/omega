@@ -2,11 +2,15 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
+import Editor from "../components/Editor";
+
 import styles from "../styles/Home.module.css";
 
 const Terminal = dynamic(() => import("../components/Terminal"), {
   ssr: false,
 });
+
+// const Editor = dynamic(() => import("../components/Editor"), { ssr: false });
 
 const Home: NextPage = () => {
   return (
@@ -18,6 +22,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <Editor />
         <Terminal />
       </main>
     </div>
