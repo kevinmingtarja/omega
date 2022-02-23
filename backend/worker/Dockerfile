@@ -14,4 +14,5 @@ RUN npm install
 COPY . .
 
 EXPOSE 8999
-CMD ["npm", "start"]
+RUN chmod +x startup.sh
+CMD ["./startup.sh"]
