@@ -3,6 +3,7 @@ FROM node:16-alpine
 # Install git
 RUN apk update
 RUN apk add git
+RUN apk add vim
 
 # Create app directory
 WORKDIR /usr/src/app

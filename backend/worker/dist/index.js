@@ -8,16 +8,26 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 wss.on("connection", (ws) => {
-    const ptyProcess = pty.spawn("bash", [], {
+    const ptyProcess = pty.spawn("sh", [], {
         name: "xterm-color",
         cols: 80,
         rows: 24,
-        cwd: process.env.HOME,
+        cwd: "/usr/src/react-app",
     });
     ptyProcess.on("data", (data) => ws.send(data));
+    ws.onopen = (event) => {
+        ptyProcess.write("pwd");
+    };
     ws.on("message", (message) => {
         console.log("rcvd: %s", message);
-        ptyProcess.write(message);
+        if (message == "CONNECTED") {
+            ptyProcess.write("npm install && npm start\r");
+            ws.send("npm install && npm start\r");
+        }
+        else {
+            console.log("else");
+            ptyProcess.write(message);
+        }
     });
 });
 server.listen(process.env.PORT || 8999, () => {

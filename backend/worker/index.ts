@@ -9,13 +9,19 @@ const server = http.createServer(app);
 
 const wss = new WebSocket.Server({ server });
 
+app.get("/connect", (req: express.Request, res: express.Response) => {
+  res.status(200).send({});
+});
+
 wss.on("connection", (ws: WebSocket) => {
   const ptyProcess = pty.spawn("sh", [], {
     name: "xterm-color",
     cols: 80,
     rows: 24,
-    cwd: process.cwd(),
+    cwd: "/usr/src/react-app",
   });
+
+  ptyProcess.write("npm install && npm start\r");
 
   ptyProcess.on("data", (data) => ws.send(data));
 

@@ -21,17 +21,12 @@ const Terminal = () => {
     const serializeAddon = new SerializeAddon();
 
     terminal.open(document.getElementById("terminal"));
-    terminal.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
 
     terminal.loadAddon(attachAddon);
     terminal.loadAddon(serializeAddon);
   }, []);
 
-  return (
-    <>
-      <div id="terminal" />
-    </>
-  );
+  return <div id="terminal" />;
 };
 
 export default Terminal;

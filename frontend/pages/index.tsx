@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import Editor from "../components/Editor";
 
 import styles from "../styles/Home.module.css";
+import Preview from "../components/Preview";
 
 const Terminal = dynamic(() => import("../components/Terminal"), {
   ssr: false,
@@ -22,6 +23,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <Preview />
         <Editor />
         <Terminal />
       </main>
