@@ -37,5 +37,3 @@ export const getAllFiles = (dir: fs.PathLike, map: RecursiveMap) => {
 
   return map;
 };
-
-console.log(getAllFiles("./", {}));
