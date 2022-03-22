@@ -3,14 +3,16 @@ An online IDE. Coming soon.
 
 ## High Level Overview
 
-Components:
+### Components:
 - 1x master node
 - 1x manager node for each EC2 instance, containing one or more containers
 - 1x worker node for each container, which runs a websocket server for communication with the client
 - 1x Redis that stores two things:
-- A hash set of {subdomain name: container’s port number} pairs
-- A sorted set of {EC2 instance’s IP address: number of containers} inside pairs, for O(1) querying time complexity
+   - {subdomain name: container’s port number} pairs
+   - A sorted set of {EC2 instance’s IP address: number of containers} inside pairs, for `O(1)` querying time complexity
 - 1x dynamic DNS server to map each subdomain to the correct EC2 instance. Runs both a UDP and HTTP server to handle dns queries and update DNS records respectively.
+
+### Activity Diagram:
 
 ![omega-2](https://user-images.githubusercontent.com/69668484/159426180-d1f64435-50bf-473b-b6ae-d5485da76465.png)
 
