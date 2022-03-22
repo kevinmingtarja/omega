@@ -14,8 +14,8 @@ The `backend` consists of the following:
 - 1x manager node for each EC2 instance, containing one or more containers
 - 1x worker node for each container, which runs a websocket server for communication with the client
 - 1x Redis that stores two things:
-   - {subdomain name: container’s port number} pairs
-   - A sorted set of {EC2 instance’s IP address: number of containers} inside pairs, for `O(1)` querying time complexity
+   - `{ subdomain name: container’s port number }` pairs
+   - A sorted set of `{ EC2 instance’s IP address: number of containers inside }` pairs, for `O(1)` querying time complexity
 - 1x dynamic DNS server to map each subdomain to the correct EC2 instance. Runs both a UDP and HTTP server to handle dns queries and update DNS records respectively.
 
 ### Activity Diagram:
@@ -32,7 +32,7 @@ Assumption: Here, I assume that the best way to provision computing resources is
 5. The `manager` node will:
    - Create a new Docker container at a certain port that runs a `worker` node and the template app for the user application of their choice i.e. if a user starts a React project, the default template would be a CRA app
    - Return the newly created container’s port number to the `manager`
-6. `Master` node adds the new {subdomain name: container port number} pair to Redis, and call our dynamic DNS server to create a new A record that maps subdomain to the IP Address of the EC2 instance it is located at
+6. `Master` node adds the new `{subdomain name: container port number}` pair to Redis, and call our dynamic DNS server to create a new A record that maps subdomain to the IP Address of the EC2 instance it is located at
 7. Return the subdomain name and port number to the client
 8. The client will connect to `subdomain.domain.com:portnumber`
 9. This will make a DNS query to our dynamic DNS server which internally will query it's records and will return the correct IP address of the EC2 instance
