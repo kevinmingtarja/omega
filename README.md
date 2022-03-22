@@ -3,7 +3,13 @@ An online IDE. Coming soon.
 
 ## High Level Overview
 
+Basically, when a user creates a new IDE session, the backend will create a new Docker container which will run a websocket server to communicate with the client, and the user program itself. So everything runs on the server side in the cloud. More in-depth explanations are available below.
+
 ### Components:
+The `frontend` is just a React app, and I used the Monaco editor from VS Code for the code editor and xterm.js and websockets for building the terminal. And I display the user app that is running in the backend using an <iframe>.
+
+The `backend` consists of the following:
+
 - 1x master node
 - 1x manager node for each EC2 instance, containing one or more containers
 - 1x worker node for each container, which runs a websocket server for communication with the client
@@ -31,3 +37,4 @@ Assumption: Here, I assume that the best way to provision computing resources is
 8. The client will connect to `subdomain.domain.com:portnumber`
 9. This will make a DNS query to our dynamic DNS server which internally will query it's records and will return the correct IP address of the EC2 instance
 10. The client will now be connected with its docker container in the cloud, and can now code in the browser
+11. All subsequent communications with the backend is done directly with its corresponding container through websockets
